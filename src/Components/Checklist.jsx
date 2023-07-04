@@ -12,6 +12,7 @@ import Select from '@mui/material/Select';
 import '../Styles/Checklist.css'
 import { useState } from 'react';
 
+
 const CheckList = () => {
 
   let [category, setCategory] = useState('')
@@ -23,6 +24,8 @@ const CheckList = () => {
   let [remark, setRemark] = useState()
   let [doneby, setDoneby] = useState()
   let [buttons, setButtons] = useState(null)
+  let [categoryMenu, setCategoryMenu] = useState([]);
+  let [assetMenu, setAssetMenu] = useState([]);
   
   let handleselect = (e)=> {
       e.preventDefault();
@@ -30,6 +33,17 @@ const CheckList = () => {
   
   let handleClick = (buttons)=>{
     setButtons(buttons);
+
+    if (buttons === 'critical') {
+      setCategoryMenu(['ICU', 'NCU','CCU','SICU','MICU','General Ward']);
+      setAssetMenu(['Asset 3', 'Asset 4', 'Asset 5','Asset 7','Asset 9']);
+    } else if (buttons === 'ot') {
+      setCategoryMenu(['Minor', 'Major', 'Gynecology','Orthopedic']);
+      setAssetMenu(['Asset 1', 'Asset 2', 'Asset 6','Asset 8','Asset 22']);
+    } else {
+      setCategoryMenu([]);
+      setAssetMenu([]);
+    }
   }
 
   let handleCategory = (e)=>
@@ -49,10 +63,10 @@ const CheckList = () => {
   }
 
     return ( 
-        <Box sx={{background:'#FAF5EE', width:{xl:"100%",lg:"100%",md:"100%",sm:"100%",xs:"100%"}, height:{xl:"100%",lg:"100%",md:"100%",sm:"100%",xs:"100%"}}}>
+        <Box sx={{background:{xl:'#FAF5EE',lg:'#FAF5EE',md:'#FAF5EE',sm:'#FAF5EE',xs:'#FAF5EE'}, width:{xl:"100%",lg:"100%",md:"100%",sm:"100%",xs:"100%"}, height:{xl:"100%",lg:"100%",md:"100%",sm:"100%",xs:"100%"}}}>
           <Typography sx={{fontSize:"24px", fontWeight:"500", color:"#FF731D" }} width="176px" height="36px" marginLeft={{xl:"250px", lg:'80px', md:'10px', sm:'10px',xs:'10px'}}>PM  Check List</Typography>
-          <Box sx={{background:'#FFFFFF',width:{xl:'1030px',lg:"1030px",md:"900px",sm:"600px",xs:"480px"}, height:{xl:'1340px',lg:"1340px",md:"900px",sm:"800px",xs:"800px"},marginLeft:{xl:"250px", lg:'80px', md:'0px'}, borderRadius:'16px', marginTop:'20px'}} >
-            <Box width={{xl:'1030px',lg:"1030px",md:"900px",sm:"600px",xs:"480px"}} display={{xl:'flex', lg:'flex', md:'flex', sm:'block', xs:'block' }}>
+          <Box sx={{background:'#FFFFFF',width:{xl:'1030px',lg:"1030px",md:"900px",sm:"600px",xs:"480px"}, height:{xl:'1340px',lg:"1340px",md:"1300px",sm:"1780px",xs:"1680px"},marginLeft:{xl:"250px", lg:'80px', md:'0px'}, borderRadius:'16px', marginTop:'20px'}} >
+            <Box  display={{xl:'flex', lg:'flex', md:'flex', sm:'block', xs:'block' }}>
                    <Button   onClick={() => handleClick('critical')} variant="outlined" type='select' sx={{borderRadius:'30px',":hover":{color:"#FF731D",borderColor:"#FF731D"},fontSize:{xl:"18px",lg:"18px",md:"16px",sm:"16px",xs:"16px"},marginLeft:{xl:'25px',lg:"25px",md:"20px",sm:"65px",xs:"10px"},marginTop:'20px',width:{xl:"245px",lg:"245px",md:"200px",sm:"230px",xs:"230px"}, height:'60px', textTransform:'none', color: buttons === 'critical' ? '#FF731D' : '#212427',border: buttons === 'critical' ? '2px solid #FF731D' : '1px solid #212427'}}>Critical Care ASSETS</Button>
                     <Button  onClick={() => handleClick('ot')} variant="outlined" type='select' sx={{borderRadius:'30px',":hover":{color:"#FF731D",borderColor:"#FF731D"},fontSize:{xl:"18px",lg:"18px",md:"16px",sm:"16px",xs:"16px"}, marginLeft:'10px',marginTop:'20px',width:{xl:"232px",lg:"232px",md:"210px",sm:"220px",xs:"220px"}, height:'60px', textTransform:'none',color: buttons === 'ot' ? '#FF731D' : '#212427',border: buttons === 'ot' ? '2px solid #FF731D' : '1px solid #212427'}}>OT Assets</Button>
                     <Box     display={{xl:'flex', lg:'flex', md:'flex', sm:'flex', xs:'flex' }} marginLeft={{xl:'0px',lg:"0px",md:"0px",sm:"60px",xs:"5px"}}>
@@ -60,69 +74,38 @@ const CheckList = () => {
                     <Button  onClick={() => handleClick('radio')} variant="outlined" type='select' sx={{borderRadius:'30px',":hover":{color:"#FF731D",borderColor:"#FF731D"},fontSize:{xl:"18px",lg:"18px",md:"16px",sm:"16px",xs:"16px"}, marginLeft:'10px',marginTop:'20px',width:{xl:"232px",lg:"232px",md:"210px",sm:"220px",xs:"220px"}, height:'60px', textTransform:'none',color: buttons === 'radio' ? '#FF731D' : '#212427',border: buttons === 'radio' ? '2px solid #FF731D' : '1px solid #212427'}}>Radiology</Button>
                     </Box>
                     </Box>
-                <Box marginTop='20px'  marginLeft={{xl:'15px', lg:'15px', md:'10px', sm:'45px', xs:'-10px'}} display={{xl:'flex', lg:'flex', md:'flex', sm:'block', xs:'block' }} >
-                <FormControl  style={{ m: 1, minWidth:484,  borderRadius:'10px',borderColor:'#1746A2', height:'60px', marginLeft:'10px' }}>
-                       
+                <Box marginTop='20px'  marginLeft={{xl:'15px', lg:'15px', md:'10px', sm:'45px', xs:'28px'}} display={{xl:'flex', lg:'flex', md:'flex', sm:'block', xs:'block' }} >
+                <FormControl  style={{ m: 1, minWidth:400,  borderRadius:'10px',borderColor:'#1746A2', height:'60px', marginLeft:'10px' }}>
+                
                        <Select
                        value={category}
                        onChange={handleCategory}
                        displayEmpty
-                       sx={{color:'#1746A2',fontFamily:'Poppins',fontSize:'20px',fontWeight:'500','& .MuiOutlinedInput-notchedOutline': {
-                         borderColor: '#1746A2', borderRadius:'10px',}}}
+                       sx={{color:'#1746A2',fontFamily:'Poppins', width:{xl:"484px", lg:'484px', md:'420px', sm:'484px' },fontSize:'20px',fontWeight:'500','& .MuiOutlinedInput-notchedOutline': {
+                         borderColor: '#1746A2', borderRadius:'10px',}}} 
                      ><MenuItem value="">
-                     <FormLabel style={{color:'#1746A2',fontFamily:'Poppins',fontSize:'20px',fontWeight:'500'}}>Category</FormLabel>
-                   </MenuItem>
-                      {buttons === 'critical' && (
-                         <div>
-                       <MenuItem sx={{color:'#1746A2',fontFamily:'Poppins',fontSize:'18px',fontWeight:'500'}} value={1}>ICU</MenuItem>
-                       <MenuItem sx={{color:'#1746A2',fontFamily:'Poppins',fontSize:'18px',fontWeight:'500'}} value={2}>NICU</MenuItem>
-                       <MenuItem sx={{color:'#1746A2',fontFamily:'Poppins',fontSize:'18px',fontWeight:'500'}} value={3}>CCU</MenuItem>
-                       <MenuItem sx={{color:'#1746A2',fontFamily:'Poppins',fontSize:'18px',fontWeight:'500'}} value={3}>SICU</MenuItem>
-                       <MenuItem sx={{color:'#1746A2',fontFamily:'Poppins',fontSize:'18px',fontWeight:'500'}} value={3}>MICU</MenuItem>
-                       <MenuItem sx={{color:'#1746A2',fontFamily:'Poppins',fontSize:'18px',fontWeight:'500'}} value={3}>General Ward</MenuItem>
-                         </div>
-                          )}
-                          {buttons === 'ot' && (
-                          <div>
-                       <MenuItem sx={{color:'#1746A2',fontFamily:'Poppins',fontSize:'18px',fontWeight:'500'}} value={1}>Minor</MenuItem>
-                       <MenuItem sx={{color:'#1746A2',fontFamily:'Poppins',fontSize:'18px',fontWeight:'500'}} value={2}>Major</MenuItem>
-                       <MenuItem sx={{color:'#1746A2',fontFamily:'Poppins',fontSize:'18px',fontWeight:'500'}} value={3}>Gynecology</MenuItem>
-                       <MenuItem sx={{color:'#1746A2',fontFamily:'Poppins',fontSize:'18px',fontWeight:'500'}} value={3}>Orthopedic</MenuItem>
-                          </div>
-                          )}
+                      <FormLabel sx={{color:'#1746A2',fontFamily:'Poppins',fontSize:'20px',fontWeight:'500'}}>Category</FormLabel>
+                      </MenuItem>  
+                        {categoryMenu.map((category, index) => (
+                          <MenuItem key={index} value={category}>{category}</MenuItem>
+                        ))}   
                      </Select>
                 </FormControl>
-               
-                <Box marginTop={{xl:'0px', lg:'0px', md:'0px', sm:'10px', xs:'10px'}} >
-                <FormControl style={{   minWidth:484, borderRadius:'10px', borderColor:'#1746A2', height:'60px', marginLeft:'10px' }}  >
+                <Box marginTop={{xl:'0px', lg:'0px', md:'0px', sm:'10px', xs:'10px'}} marginLeft={{xl:"0px", lg:'0px', md:'3px'}} width={{xl:'484px',lg:'484px',md:'300px'}} >
+                <FormControl style={{   minWidth:400, borderRadius:'10px', borderColor:'#1746A2', height:'60px', marginLeft:'10px' }}  >
                     <Select
                     value={asset}
                     onChange={handleAsset}
                     displayEmpty
-                    sx={{color:'#1746A2',fontFamily:'Poppins',fontSize:'20px',fontWeight:'500','& .MuiOutlinedInput-notchedOutline': {
+                    sx={{color:'#1746A2',fontFamily:'Poppins',fontSize:'20px',fontWeight:'500',width:{xl:"484px", lg:'484px', md:'420px', sm:'484px'},'& .MuiOutlinedInput-notchedOutline': {
                       borderColor: '#1746A2', borderRadius:'10px'}}}
                   ><MenuItem value="">
                   <FormLabel style={{color:'#1746A2',fontFamily:'Poppins',fontSize:'20px',fontWeight:'500'}}>Asset List</FormLabel>
-                </MenuItem>
-                {buttons === 'critical' && (
-                    <div>
-                    <MenuItem sx={{color:'#1746A2',fontFamily:'Poppins',fontSize:'18px',fontWeight:'500'}} value={3}>Asset 3</MenuItem>
-                    <MenuItem sx={{color:'#1746A2',fontFamily:'Poppins',fontSize:'18px',fontWeight:'500'}} value={4}>Asset 4</MenuItem>
-                    <MenuItem sx={{color:'#1746A2',fontFamily:'Poppins',fontSize:'18px',fontWeight:'500'}} value={5}>Asset 5</MenuItem>
-                    <MenuItem sx={{color:'#1746A2',fontFamily:'Poppins',fontSize:'18px',fontWeight:'500'}} value={5}>Asset 7</MenuItem>
-                    <MenuItem sx={{color:'#1746A2',fontFamily:'Poppins',fontSize:'18px',fontWeight:'500'}} value={5}>Asset 9</MenuItem>
-                    </div>
-                     )}
-                      {buttons === 'ot' && (
-                     <div>
-                     <MenuItem sx={{color:'#1746A2',fontFamily:'Poppins',fontSize:'18px',fontWeight:'500'}} value={3}>Asset 1</MenuItem>
-                    <MenuItem sx={{color:'#1746A2',fontFamily:'Poppins',fontSize:'18px',fontWeight:'500'}} value={4}>Asset 2</MenuItem>
-                    <MenuItem sx={{color:'#1746A2',fontFamily:'Poppins',fontSize:'18px',fontWeight:'500'}} value={5}>Asset 6</MenuItem>
-                    <MenuItem sx={{color:'#1746A2',fontFamily:'Poppins',fontSize:'18px',fontWeight:'500'}} value={5}>Asset 8</MenuItem>
-                    <MenuItem sx={{color:'#1746A2',fontFamily:'Poppins',fontSize:'18px',fontWeight:'500'}} value={5}>Asset 22</MenuItem>
-                     </div>
-                      )}
-                  </Select>
+                  </MenuItem>
+                    {assetMenu.map((asset, index) => (
+                      <MenuItem key={index} value={asset}>{asset}</MenuItem>
+                    ))}   
+                    </Select>
                 </FormControl>
                 </Box>
                 </Box>
